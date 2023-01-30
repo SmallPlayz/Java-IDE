@@ -15,6 +15,7 @@ public class Graphics {
     private JButton openFile;
     private JButton compileFile;
     private JButton run;
+    private JButton fileExplorer;
     private static JTextField newFileName;
     private final int width = (int)Toolkit.getDefaultToolkit().getScreenSize().getWidth();
     private final int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
@@ -31,6 +32,9 @@ public class Graphics {
 
         text = new JTextArea();
         text.setBounds(15, 100, width-30, 900-100-75-225);
+        text.setFont(new Font("JetBrains Mono", Font.PLAIN, 20));
+        text.setForeground(new Color(255, 255, 255));
+        text.setBackground(new Color(38, 38, 38));
 
         textScrollPane = new JScrollPane(text);
         textScrollPane.setBounds(15, 100, width-30, 900-100-75-225);
@@ -94,9 +98,23 @@ public class Graphics {
         run.setBounds(360, 15, 100, 50);
         frame.add(run);
 
+        fileExplorer = new JButton("Explorer");
+        fileExplorer.setBounds(475, 15, 100, 50);
+        frame.add(fileExplorer);
+
         newFileName = new JTextField();
         newFileName.setBounds(15, 70, 100, 25);
         frame.add(newFileName);
+
+        fileExplorer.addActionListener(e -> {
+            if(!(file == null)) {
+                try {
+                    openDirectoryInWindows(fileDirectory);
+                } catch (Exception ex) {
+                    throw new RuntimeException(ex);
+                }
+            }
+        });
 
         newFile.addActionListener(e -> {
             if (newFileName.getText().trim().length() > 0) {
@@ -185,10 +203,10 @@ public class Graphics {
         printLines(command + " stderr:", pro.getErrorStream());
         pro.waitFor();
         System.out.println(command + " exitValue() " + pro.exitValue());
-        console.setText(command + " exitValue() " + pro.exitValue());
+        console.setText(console.getText() + "\n" + command + " exitValue() " + pro.exitValue());
     }
-    private static void openDirectoryInWindows() throws Exception {
-        Runtime.getRuntime().exec("explorer " + fileDirectory);
+    private static void openDirectoryInWindows(String directory) throws Exception {
+        Runtime.getRuntime().exec("explorer " + directory);
     }
 }
 
