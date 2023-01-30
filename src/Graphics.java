@@ -55,6 +55,8 @@ public class Graphics {
         text.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
         text.setAntiAliasingEnabled(true);
         text.setCodeFoldingEnabled(true);
+        text.setAutoIndentEnabled(true);
+        text.setFont((new Font(text.getFont().getName(), Font.PLAIN, 20)));
         textScrollPane = new RTextScrollPane(text);
         textPanel.add(textScrollPane);
         textPanel.setBounds(15, 100, width-30, 900-100-75-225);
@@ -66,7 +68,7 @@ public class Graphics {
         //scrollPanee.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         //scrollPanee.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
         // Add the JScrollPane to the JFrame
-       // JPanel pp = new JPanel();
+        // JPanel pp = new JPanel();
         //pp.add(scrollPanee);
         //pp.setBounds(15, 100, width-30, 900-100-75-225);
         //BoxLayout boxlayout = new BoxLayout(pp, BoxLayout.Y_AXIS);
