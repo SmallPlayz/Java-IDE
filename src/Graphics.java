@@ -1,3 +1,7 @@
+import org.fife.ui.rsyntaxtextarea.RSyntaxTextArea;
+import org.fife.ui.rsyntaxtextarea.SyntaxConstants;
+import org.fife.ui.rtextarea.RTextScrollPane;
+
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -10,7 +14,9 @@ public class Graphics {
 
     private static JTextArea console;
     private JFrame frame;
-    private JTextArea text;
+    private JPanel textPanel;
+    private RSyntaxTextArea text;
+    private RTextScrollPane textScrollPane;
     private JButton newFile;
     private JButton openFile;
     private JButton compileFile;
@@ -21,7 +27,6 @@ public class Graphics {
     private final int height = (int)Toolkit.getDefaultToolkit().getScreenSize().getHeight();
     private File file;
     private static String fileDirectory;
-    private JScrollPane textScrollPane;
     private JScrollPane consoleScrollPane;
     Graphics() {
         frame = new JFrame("Java IDE");
@@ -30,11 +35,13 @@ public class Graphics {
         frame.setSize(1280, 720);
         frame.setLayout(null);
 
+        /*
         text = new JTextArea();
         text.setBounds(15, 100, width-30, 900-100-75-225);
         text.setFont(new Font("JetBrains Mono", Font.PLAIN, 20));
         text.setForeground(new Color(255, 255, 255));
         text.setBackground(new Color(38, 38, 38));
+
 
         textScrollPane = new JScrollPane(text);
         textScrollPane.setBounds(15, 100, width-30, 900-100-75-225);
@@ -42,8 +49,16 @@ public class Graphics {
         text.getDocument().addDocumentListener(new DocumentSizeListener(textScrollPane));
 
         frame.add(textScrollPane);
-
-        //frame.add(text);
+         */
+        textPanel = new JPanel(new BorderLayout());
+        text = new RSyntaxTextArea(20, 60);
+        text.setSyntaxEditingStyle(SyntaxConstants.SYNTAX_STYLE_JAVA);
+        text.setAntiAliasingEnabled(true);
+        text.setCodeFoldingEnabled(true);
+        textScrollPane = new RTextScrollPane(text);
+        textPanel.add(textScrollPane);
+        textPanel.setBounds(15, 100, width-30, 900-100-75-225);
+        frame.add(textPanel);
 
 
         //text.setPreferredSize(new Dimension(width-30, 900-100-75-225));
@@ -61,6 +76,7 @@ public class Graphics {
         console.setBounds(15, 615, width-30, height-615-15-75); //210
         //console.setPreferredSize(new Dimension(width-30-15, 100));//height-615-15-75)
         // 900-615-15-75
+        console.setFont(new Font("JetBrains Mono", Font.PLAIN, 15));
         console.setForeground(new Color(255, 255, 255));
         console.setBackground(new Color(38, 38, 38));
 
